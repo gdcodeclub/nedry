@@ -18,7 +18,7 @@ class OffensesControllerTest < ActionController::TestCase
 
   test "should create offense" do
     assert_difference('Offense.count') do
-      post :create, offense: {ip_address: '127.0.0.3' }
+      post :create, offense: { }
     end
 
     assert_redirected_to offense_path(assigns(:offense))
