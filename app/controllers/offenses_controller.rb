@@ -24,6 +24,7 @@ class OffensesController < ApplicationController
   # POST /offenses
   # POST /offenses.json
   def create
+    params[:offense] = {:ip_address => request.ip}
     @offense = Offense.new(offense_params)
 
     respond_to do |format|
