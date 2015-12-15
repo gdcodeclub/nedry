@@ -16,6 +16,15 @@ http://edgeguides.rubyonrails.org/debugging_rails_applications.html#debugging-wi
 http://edgeguides.rubyonrails.org/testing.html
 * `rake test` runs all tests
 
+
+# Up and running
+* Create the application
+* Create the model
+* Run migrations
+* Run tests
+* Modify the controller
+* Run tests
+
 ## Create the new Rails application
 http://guides.rubyonrails.org/command_line.html#rails-new
 * `rails new nedry` creates the project
@@ -33,3 +42,13 @@ http://edgeguides.rubyonrails.org/active_record_migrations.html
 ## Run migrations
 * `rake db:migrate` runs against the development database
 * `rake db:test:prepare` runs against the test database
+
+## Run tests
+* ` rake test`
+
+## Modify the controller
+### Strong parameters
+http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
+
+## Run tests
+* ` rake test`
