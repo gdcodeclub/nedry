@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>IP Address</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,9 +13,9 @@
   <tbody>
     <% @offenses.each do |offense| %>
       <tr>
-        <td><%= link_to 'Show', offense %></td>
+        <td><%= link_to offense.ip_address, offense %></td>
         <td><%= link_to 'Edit', edit_offense_path(offense) %></td>
-        <td><%= link_to 'Destroy', offense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', offense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
