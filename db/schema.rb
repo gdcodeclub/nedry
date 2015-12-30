@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201144232) do
+ActiveRecord::Schema.define(version: 20151222182306) do
 
   create_table "offenses", force: :cascade do |t|
     t.string   "ip_address", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "host_name"
   end
 
 end

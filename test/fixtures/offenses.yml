@@ -4,8 +4,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {ip_address: '127.0.0.1'}
+one: {ip_address: '127.0.0.1', host_name: 'testhostname1'}
 # column: value
 #
-two: {ip_address: '127.0.0.2'}
+two: {ip_address: '127.0.0.2', host_name: 'testhostname2'}
 #  column: value
+

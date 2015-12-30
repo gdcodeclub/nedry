@@ -24,7 +24,7 @@ class OffensesController < ApplicationController
   # POST /offenses
   # POST /offenses.json
   def create
-    params[:offense] = {:ip_address => request.ip}
+    params[:offense] = {:ip_address => request.ip, :host_name => request.remote_host}
     @offense = Offense.new(offense_params)
 
     respond_to do |format|
@@ -74,6 +74,6 @@ class OffensesController < ApplicationController
     #end
     # Whitelisting IP Address
     def offense_params
-      params.require(:offense).permit(:ip_address)
+      params.require(:offense).permit(:ip_address, :host_name)
     end
 end
