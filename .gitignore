@@ -15,6 +15,5 @@
 /log/*
 !/log/.keep
 /tmp
-
-# Ignore the byebug file
 .byebug_history
+coverage
