@@ -35,7 +35,7 @@ class OffensesControllerTest < ActionController::TestCase
   end
 
   test "should update offense" do
-    patch :update, id: @offense, offense: {ip_address: '127.0.0.3' }
+    patch :update, id: @offense, offense: {ip_address: '127.0.0.3', host_name: 'teststring'}
     assert_redirected_to offense_path(assigns(:offense))
   end
 
@@ -46,4 +46,5 @@ class OffensesControllerTest < ActionController::TestCase
 
     assert_redirected_to offenses_path
   end
+
 end

@@ -1,3 +1,116 @@
 // Place all the styles related to the Offenses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+h1 {
+	text-align: center;
+	font: Helvetica;
+	background-color: #C8CFC3;
+	padding: 15px;
+}	
+
+body {
+
+	background-color: #F0F0E2;
+ } 
+
+ table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}    
+
+td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 10px;
+}
+th {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    background-color: #4CAF50
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+tr:hover {background-color: #ddd;}
+
+.create-button {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: bottom;
+  color: #0C5;
+
+  font-size: 15px;
+  font-family: "Nunito", sans-serif;
+  font-weight: 300;
+  
+  margin: 5em auto;
+  
+  position: absolute; 
+  top:0; right:0; bottom:0; left:0;
+  
+  padding: 30px 0;
+  width: 220px;
+  height:20px;
+
+  background: #0D6;
+  border: 1px solid #0D6;
+  color: #FFF;
+  overflow: hidden;
+  
+  transition: all 0.5s;
+}
+
+.create-button:hover, .create-button:active 
+{
+  text-decoration: none;
+  color: #0C5;
+  border-color: #0C5;
+  background: #FFF;
+}
+
+.create-button span 
+{
+  display: inline-block;
+  position: relative;
+  padding-right: 0;
+  
+  transition: padding-right 0.5s;
+}
+
+.create-button span:after 
+{
+  content: ' ';  
+  position: absolute;
+  top: 0;
+  right: -18px;
+  opacity: 0;
+  width: 10px;
+  height: 10px;
+  margin-top: -10px;
+
+  background: rgba(0, 0, 0, 0);
+  border: 3px solid #FFF;
+  border-top: none;
+  border-right: none;
+
+  transition: opacity 0.5s, top 0.5s, right 0.5s;
+  transform: rotate(-45deg);
+}
+
+.create-button:hover span, .create-button:active span 
+{
+  padding-right: 30px;
+}
+
+.create-button:hover span:after, .create-button:active span:after 
+{
+  transition: opacity 0.5s, top 0.5s, right 0.5s;
+  opacity: 1;
+  border-color: #0C5;
+  right: 0;
+  top: 50%;
+}
