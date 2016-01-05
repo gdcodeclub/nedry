@@ -4,7 +4,8 @@ Follow along as we create the application
 ### Rails commands
 README.md holds instructions on bulding the application, but you should also find the following useful:
 http://guides.rubyonrails.org/command_line.html
-* `rails s` runs the server
+* `rails s` runs the application locally
+* `rails s --binding=0.0.0.0` runs the locally and lets other users on the network connect to it
 * `rails c` starts the interactive console
 
 ### Debugging
@@ -14,10 +15,24 @@ http://edgeguides.rubyonrails.org/debugging_rails_applications.html#debugging-wi
 
 ### Testing
 http://edgeguides.rubyonrails.org/testing.html
-* `rake test` runs all tests
+* `rake db:test:prepare` to make sure your test database is up to date
+* `rake test` to run all tests
+
+### Preparing your local environments
+If you already have checked out the shared repository, you'll want to do most of the following each time you start
+* Get the latest code from the shared repository
+* `bundle install` to update/install per Gem changes
+* `rake db:migrate` to make sure your development database is up to date
+* `rake db:test:prepare` to make sure your test database is up to date
+
+#### Getting the latest code from the shared repository
+* Make sure to commit your local changes first (probably in a non-master branch)
+* `git checkout master` to get back to your local master
+* `git fetch -va origin master` to become aware of new branches (only if you want to work on non-master branches in the shared repository)
+* `git checkout --rebase origin master` to update with the latest code in the master branch of the shared repository
 
 
-# Up and running
+# Developing
 * Create the application
 * Create the model
 * Run migrations
@@ -52,3 +67,4 @@ http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
 
 ## Run tests
 * ` rake test`
+
