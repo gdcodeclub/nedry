@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class OffensesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   setup do
+    sign_in admin_users(:one)
     @offense = offenses(:one)
   end
 
