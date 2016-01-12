@@ -86,3 +86,9 @@ admin@example.com/password
 ## Integrate Active Admin with our application
 We want anybody to be able to create an offense, but we only want certain folks to be able to see and/or change offenses so we want to make sure that our create or report action doesn't require credentials, but everywhere else does.
 
+### Require authentication
+http://guides.rubyonrails.org/action_controller_overview.html#filters
+We've added `before_action :authenticate_admin_user!` to `ApplicationController`.  `before_action` is a filter and it references a method that Active Admin provides.  What we are doing here is telling Rails to make sure an admin user is signed in before executing _any_ `Controller` method.
+
+To allow some methods to be executed by anonymous users, we then use a skip filter (`skip_before_action`) and tell it to apply to `:new` and `:create` actions/methods.
+

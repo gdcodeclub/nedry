@@ -8,18 +8,18 @@ class OffensesControllerTest < ActionController::TestCase
     @offense = offenses(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:offenses)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create offense" do
+  test 'should create offense' do
     assert_difference('Offense.count') do
       post :create, offense: { }
     end
@@ -27,22 +27,22 @@ class OffensesControllerTest < ActionController::TestCase
     assert_redirected_to offense_path(assigns(:offense))
   end
 
-  test "should show offense" do
+  test 'should show offense' do
     get :show, id: @offense
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @offense
     assert_response :success
   end
 
-  test "should update offense" do
+  test 'should update offense' do
     patch :update, id: @offense, offense: {ip_address: '127.0.0.3', host_name: 'teststring'}
     assert_redirected_to offense_path(assigns(:offense))
   end
 
-  test "should destroy offense" do
+  test 'should destroy offense' do
     assert_difference('Offense.count', -1) do
       delete :destroy, id: @offense
     end
@@ -50,4 +50,25 @@ class OffensesControllerTest < ActionController::TestCase
     assert_redirected_to offenses_path
   end
 
+  # probably will nix this and just expose :create eventually
+  test 'should not require authentication for "new"' do
+    sign_out admin_users(:one)
+    get :new
+    assert_response :success
+  end
+
+  test 'should not require authentication to create offense' do
+    sign_out admin_users(:one)
+    assert_difference('Offense.count') do
+      post :create, offense: { }
+    end
+
+    assert_redirected_to offense_path(assigns(:offense))
+  end
+
+  test 'should not show offense without authentication' do
+    sign_out admin_users(:one)
+    get :show, id: @offense
+    assert_response :redirect
+  end
 end
