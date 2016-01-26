@@ -35,7 +35,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 # gem 'capistrano-rails', group: :development
 
 # should be in dev/test but problems when not
-gem 'spring'
+gem 'spring', '1.4.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
