@@ -66,9 +66,6 @@ http://edgeguides.rubyonrails.org/active_record_migrations.html
 http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
 
 ## Run tests
-<<<<<<< HEAD
-* ` rake test`
-=======
 * `rake test`
 
 # Active Admin
@@ -103,7 +100,6 @@ admin@example.com/password
 
 ## Integrate Active Admin with our application
 We want anybody to be able to create an offense, but we only want certain folks to be able to see and/or change offenses so we want to make sure that our create or report action doesn't require credentials, but everywhere else does.
->>>>>>> Savepoint for documentation
 
 ### Require authentication
 http://guides.rubyonrails.org/action_controller_overview.html#filters

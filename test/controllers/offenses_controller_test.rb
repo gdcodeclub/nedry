@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'minitest/autorun'
 
 class OffensesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
@@ -19,12 +20,35 @@ class OffensesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'should create offense' do
-    assert_difference('Offense.count') do
-      post :create, offense: { }
+  test 'should create offense when resolv returns nil' do 
+    Resolv.stub(:getname, nil) do
+      assert_difference('Offense.count') do
+        post :create, offense: {}
+      end
     end
 
     assert_redirected_to offense_path(assigns(:offense))
+    assert_equal 'n/a', assigns(:offense).host_name
+  end
+
+  test 'should create offense when resolv returns a valid value' do 
+    Resolv.stub(:getname, 'teststring') do
+      assert_difference('Offense.count') do
+        post :create, offense: {}
+      end
+    end
+
+    assert_redirected_to offense_path(assigns(:offense))
+    assert_equal 'teststring', assigns(:offense).host_name
+  end
+ 
+  test 'should create offense when resolv raises an exception' do       
+    assert_difference('Offense.count') do
+      post :create, offense: {}
+    end
+
+     assert_redirected_to offense_path(assigns(:offense))
+     assert_equal 'n/a', assigns(:offense).host_name
   end
 
   test 'should show offense' do
@@ -51,7 +75,7 @@ class OffensesControllerTest < ActionController::TestCase
   end
 
   # probably will nix this and just expose :create eventually
-  test 'should not require authentication for "new"' do
+  test "should not require authentication for 'new'" do
     sign_out admin_users(:one)
     get :new
     assert_response :success
