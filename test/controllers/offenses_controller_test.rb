@@ -1,4 +1,5 @@
 require 'test_helper'
+require "minitest/autorun"
 
 class OffensesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
@@ -19,12 +20,15 @@ class OffensesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create offense" do
+  test "should create offense" do 
+    mock_resolv = Minitest::Mock.new
+    mock_resolv.expect :getname, nil
     assert_difference('Offense.count') do
-      post :create, offense: { }
+      post :create, offense: { ip_address: '127.0.0.4', host_name: 'teststring4' }
     end
-
     assert_redirected_to offense_path(assigns(:offense))
+    assert_equal 'n/a', assigns(:offense).host_name
+
   end
 
   test "should show offense" do
