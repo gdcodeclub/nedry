@@ -20,14 +20,39 @@ class OffensesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create offense" do 
-    mock_resolv = Minitest::Mock.new
-    mock_resolv.expect :getname, nil
-    assert_difference('Offense.count') do
-      post :create, offense: { ip_address: '127.0.0.4', host_name: 'teststring4' }
+  test "should create offense when resolv returns nil" do 
+    Resolv.stub(:getname, nil) do
+      assert_difference('Offense.count') do
+        post :create, offense: {}
+      end
     end
+
     assert_redirected_to offense_path(assigns(:offense))
     assert_equal 'n/a', assigns(:offense).host_name
+
+  end
+
+  test "should create offense when resolv returns a valid value" do 
+    
+    Resolv.stub(:getname, 'teststring') do
+      assert_difference('Offense.count') do
+        post :create, offense: {}
+      end
+    end
+
+    assert_redirected_to offense_path(assigns(:offense))
+    assert_equal 'teststring', assigns(:offense).host_name
+
+  end
+ 
+  test "should create offense when resolv raises an exception" do 
+      
+    assert_difference('Offense.count') do
+      post :create, offense: {}
+    end
+
+     assert_redirected_to offense_path(assigns(:offense))
+     assert_equal 'n/a', assigns(:offense).host_name
 
   end
 

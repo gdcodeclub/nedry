@@ -24,10 +24,11 @@ class OffensesController < ApplicationController
   # POST /offenses
   # POST /offenses.json
   def create
-      host_name = begin
-      Resolv.getname(request.ip) 
-     rescue Resolv::ResolvError
-     end || 'n/a'
+    host_name = begin
+    Resolv.getname(request.ip) 
+    rescue Resolv::ResolvError
+    end || 'n/a'
+    
     params[:offense] = {:ip_address => request.ip, :host_name => host_name}
     @offense = Offense.new(offense_params)
     respond_to do |format|
