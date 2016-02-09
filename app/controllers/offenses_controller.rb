@@ -1,5 +1,6 @@
 class OffensesController < ApplicationController
   before_action :set_offense, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_admin_user!, only: [:new, :create]
 
   # GET /offenses
   # GET /offenses.json
@@ -24,9 +25,13 @@ class OffensesController < ApplicationController
   # POST /offenses
   # POST /offenses.json
   def create
-    params[:offense] = {:ip_address => request.ip, :host_name => request.remote_host}
+    host_name = begin
+      Resolv.getname(request.ip) 
+    rescue Resolv::ResolvError
+    end || 'n/a'
+    
+    params[:offense] = {:ip_address => request.ip, :host_name => host_name}
     @offense = Offense.new(offense_params)
-
     respond_to do |format|
       if @offense.save
         format.html { redirect_to @offense, notice: 'Offense was successfully created.' }
