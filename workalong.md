@@ -42,6 +42,7 @@ http://edgeguides.rubyonrails.org/active_record_migrations.html
 ## Run migrations
 * `rake db:migrate` runs against the development database
 * `rake db:test:prepare` runs against the test database
+* `rake db:seed` runs against the admin users database
 
 ## Run tests
 * ` rake test`
