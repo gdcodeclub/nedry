@@ -18,6 +18,19 @@ class OffensesController < ApplicationController
     @offense = Offense.new
   end
 
+  def email
+    # default api root endpoint is https://tms.govdelivery.com
+    # For details https://jira.govdelivery.com/browse/ES-5154
+    client = GovDelivery::TMS::Client.new('TOKEN', :api_root => 'https://stage-tms.govdelivery.com')
+    message = client.email_messages.build(:body=>'<p><a href="http://example.com">Visit here</a></p>',
+                                      :subject => 'Hey',
+                                      :from_email => 'nedry@public.govdelivery.com',
+                                      :from_name => 'GovDelivery Code Club @TM')
+    message.recipients.build(:email=>'test@test.com')
+    message.post             # true
+    message.get # To test if post succeeded
+  end
+
   # GET /offenses/1/edit
   def edit
   end

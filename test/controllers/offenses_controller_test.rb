@@ -95,4 +95,11 @@ class OffensesControllerTest < ActionController::TestCase
     get :show, id: @offense
     assert_response :redirect
   end
+
+  test 'should send an email' do 
+    offenses_controller = OffensesController.new
+    offenses_controller.email
+    assert_response :success
+  end
+
 end

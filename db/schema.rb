@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20160301145735) do
 
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
     t.text     "body"
