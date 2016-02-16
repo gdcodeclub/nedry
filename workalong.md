@@ -21,9 +21,11 @@ http://edgeguides.rubyonrails.org/testing.html
 ### Preparing your local environments
 If you already have checked out the shared repository, you'll want to do most of the following each time you start
 * Get the latest code from the shared repository
+* `gem install bundler` to install bundler
 * `bundle install` to update/install per Gem changes
 * `rake db:migrate` to make sure your development database is up to date
 * `rake db:test:prepare` to make sure your test database is up to date
+* `rake db:seed` to load seed data (in our case this creates an admin user)
 
 #### Getting the latest code from the shared repository
 * Make sure to commit your local changes first (probably in a non-master branch)
