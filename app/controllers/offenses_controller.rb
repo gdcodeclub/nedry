@@ -26,11 +26,12 @@ class OffensesController < ApplicationController
   # POST /offenses.json
   def create
     host_name = begin
-      Resolv.getname(request.ip) 
+      Resolv.getname(request.ip)
     rescue Resolv::ResolvError
     end || 'n/a'
-    
-    params[:offense] = {:ip_address => request.ip, :host_name => host_name}
+
+    params[:offense][:ip_address] = request.ip
+    params[:offense][:host_name] = host_name
     @offense = Offense.new(offense_params)
     respond_to do |format|
       if @offense.save
@@ -79,6 +80,6 @@ class OffensesController < ApplicationController
     #end
     # Whitelisting IP Address
     def offense_params
-      params.require(:offense).permit(:ip_address, :host_name)
+      params.require(:offense).permit(:ip_address, :host_name, :email)
     end
 end
