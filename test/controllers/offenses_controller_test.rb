@@ -102,4 +102,10 @@ class OffensesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'should send a sms message' do 
+    offenses_controller = OffensesController.new
+    offenses_controller.sms
+    assert_response :success
+  end
+
 end
