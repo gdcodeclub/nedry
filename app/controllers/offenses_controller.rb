@@ -5,7 +5,7 @@ class OffensesController < ApplicationController
  def client
   GovDelivery::TMS::Client.new(ENV['NEDRY_TMS_TOKEN'], :api_root => 'https://stage-tms.govdelivery.com')
  end
- 
+
   # GET /offenses
   # GET /offenses.json
   def index
@@ -30,20 +30,20 @@ class OffensesController < ApplicationController
                                       :subject => 'Hey',
                                       :from_email => 'nedry@public.govdelivery.com',
                                       :from_name => 'GovDelivery Code Club @TM')
-    message.recipients.build(:email=>'test@sink.govdelivery.com')
+    message.recipients.build(:email=> @offense.email )
     message.post             # true
+    @offense.email_id = message.id
     message.get # To test if post succeeded
   end
 
   def sms
     #to send sms message
     message = client.sms_messages.build(:body=>'Test Message!')
-    message.recipients.build(:phone=>'6512397900')
-    message.recipients.build(:phone=>'9522407590')
+    message.recipients.build(:phone=>@offense.phone)
     message.post             # true
-    
-    puts message.href             # "/messages/sms/87"
-    puts message.get              # <GovDelivery::TMS::SmsMessage href=/messages/sms/87 attributes={...}>
+    @offense.sms_id = message.id # this is the message id
+    # message.href             # "/messages/sms/87"
+    message.get              # <GovDelivery::TMS::SmsMessage href=/messages/sms/87 attributes={...}>
   end
 
   # GET /offenses/1/edit
@@ -54,14 +54,20 @@ class OffensesController < ApplicationController
   # POST /offenses.json
   def create
     host_name = begin
-      Resolv.getname(request.ip) 
+      Resolv.getname(request.ip)
     rescue Resolv::ResolvError
     end || 'n/a'
-    
+
     params[:offense] = {:ip_address => request.ip, :host_name => host_name}
     @offense = Offense.new(offense_params)
     respond_to do |format|
       if @offense.save
+        if @offense.email?
+          # send an email
+        end
+        if @offense.phone?
+          # send an sms message
+        end
         format.html { redirect_to @offense, notice: 'Offense was successfully created.' }
         format.json { render :show, status: :created, location: @offense }
       else
