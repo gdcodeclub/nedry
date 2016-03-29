@@ -64,10 +64,10 @@ class OffensesController < ApplicationController
     respond_to do |format|
       if @offense.save
         if @offense.email?
-          # send an email
+          self.email
         end
         if @offense.phone?
-          # send an sms message
+          self.sms
         end
         format.html { redirect_to @offense, notice: 'Offense was successfully created.' }
         format.json { render :show, status: :created, location: @offense }
@@ -114,6 +114,6 @@ class OffensesController < ApplicationController
     #end
     # Whitelisting IP Address
     def offense_params
-      params.require(:offense).permit(:ip_address, :host_name, :email)
+      params.require(:offense).permit(:ip_address, :host_name, :email, :phone)
     end
 end
