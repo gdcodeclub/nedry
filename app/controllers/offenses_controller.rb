@@ -58,12 +58,8 @@ class OffensesController < ApplicationController
     rescue Resolv::ResolvError
     end || 'n/a'
 
-<<<<<<< c106a09ad8d370082bdaef4ae05306c9f0cd2201
-    params[:offense][:ip_address] = request.ip
-    params[:offense][:host_name] = host_name
-=======
-    params[:offense] = {:ip_address => request.ip, :host_name => host_name}
->>>>>>> added email_id and message_id to offense controller, need some tests though
+    params[:offense].merge!({:ip_address => request.ip, :host_name => host_name})
+
     @offense = Offense.new(offense_params)
     respond_to do |format|
       if @offense.save
