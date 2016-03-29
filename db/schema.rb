@@ -52,12 +52,9 @@ ActiveRecord::Schema.define(version: 20160322134317) do
     t.datetime "updated_at", null: false
     t.string   "host_name"
     t.string   "email"
-<<<<<<< c106a09ad8d370082bdaef4ae05306c9f0cd2201
-=======
     t.string   "phone"
     t.decimal  "sms_id"
     t.decimal  "email_id"
->>>>>>> added email_id and message_id to offense controller, need some tests though
   end
 
 end
