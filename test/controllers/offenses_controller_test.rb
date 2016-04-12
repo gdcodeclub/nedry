@@ -20,7 +20,7 @@ class OffensesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'should create offense when resolv returns nil' do 
+  test 'should create offense when resolv returns nil' do
     Resolv.stub(:getname, nil) do
       assert_difference('Offense.count') do
         post :create, offense: {}
@@ -31,7 +31,7 @@ class OffensesControllerTest < ActionController::TestCase
     assert_equal 'n/a', assigns(:offense).host_name
   end
 
-  test 'should create offense when resolv returns a valid value' do 
+  test 'should create offense when resolv returns a valid value' do
     Resolv.stub(:getname, 'teststring') do
       assert_difference('Offense.count') do
         post :create, offense: {}
@@ -41,8 +41,8 @@ class OffensesControllerTest < ActionController::TestCase
     assert_redirected_to offense_path(assigns(:offense))
     assert_equal 'teststring', assigns(:offense).host_name
   end
- 
-  test 'should create offense when resolv raises an exception' do       
+
+  test 'should create offense when resolv raises an exception' do
     assert_difference('Offense.count') do
       post :create, offense: {}
     end
@@ -95,4 +95,21 @@ class OffensesControllerTest < ActionController::TestCase
     get :show, id: @offense
     assert_response :redirect
   end
+
+  test 'should send an email' do
+    offenses_controller = OffensesController.new
+    offense = offenses_controller.new
+    offense.email = 'text@example.com'
+    offenses_controller.email
+    assert_response :success
+  end
+
+  test 'should send a sms message' do
+    offenses_controller = OffensesController.new
+    offense = offenses_controller.new
+    offense.phone = '5555555555'
+    offenses_controller.sms
+    assert_response :success
+  end
+
 end

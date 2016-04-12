@@ -2,6 +2,10 @@ class OffensesController < ApplicationController
   before_action :set_offense, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_admin_user!, only: [:new, :create]
 
+ def client
+  GovDelivery::TMS::Client.new(ENV['NEDRY_TMS_TOKEN'], :api_root => 'https://stage-tms.govdelivery.com')
+ end
+
   # GET /offenses
   # GET /offenses.json
   def index
@@ -18,6 +22,30 @@ class OffensesController < ApplicationController
     @offense = Offense.new
   end
 
+  def email
+    # default api root endpoint is https://tms.govdelivery.com
+    # For details https://jira.govdelivery.com/browse/ES-5154
+    #client = GovDelivery::TMS::Client.new(ENV['NEDRY_TMS_TOKEN'], :api_root => 'https://stage-tms.govdelivery.com')
+    message = client.email_messages.build(:body=>'<p><a href="http://example.com">Visit here</a></p>',
+                                      :subject => 'Hey',
+                                      :from_email => 'nedry@public.govdelivery.com',
+                                      :from_name => 'GovDelivery Code Club @TM')
+    message.recipients.build(:email=> @offense.email )
+    message.post             # true
+    @offense.email_id = message.id
+    message.get # To test if post succeeded
+  end
+
+  def sms
+    #to send sms message
+    message = client.sms_messages.build(:body=>'Test Message!')
+    message.recipients.build(:phone=>@offense.phone)
+    message.post             # true
+    @offense.sms_id = message.id # this is the message id
+    # message.href             # "/messages/sms/87"
+    message.get              # <GovDelivery::TMS::SmsMessage href=/messages/sms/87 attributes={...}>
+  end
+
   # GET /offenses/1/edit
   def edit
   end
@@ -30,11 +58,17 @@ class OffensesController < ApplicationController
     rescue Resolv::ResolvError
     end || 'n/a'
 
-    params[:offense][:ip_address] = request.ip
-    params[:offense][:host_name] = host_name
+    params[:offense].merge!({:ip_address => request.ip, :host_name => host_name})
+
     @offense = Offense.new(offense_params)
     respond_to do |format|
       if @offense.save
+        if @offense.email?
+          self.email
+        end
+        if @offense.phone?
+          self.sms
+        end
         format.html { redirect_to @offense, notice: 'Offense was successfully created.' }
         format.json { render :show, status: :created, location: @offense }
       else
@@ -80,6 +114,6 @@ class OffensesController < ApplicationController
     #end
     # Whitelisting IP Address
     def offense_params
-      params.require(:offense).permit(:ip_address, :host_name, :email)
+      params.require(:offense).permit(:ip_address, :host_name, :email, :phone)
     end
 end
